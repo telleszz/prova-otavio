@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Notas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            max-width: 800px;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cadastro de Notas</h1>
+    <form id="notaForm">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+        
+        <label for="matricula">Matrícula:</label>
+        <input type="text" id="matricula" name="matricula" required>
+        
+        <label for="nota1">Nota 1:</label>
+        <input type="number" id="nota1" name="nota1" step="0.01" required>
+        
+        <label for="nota2">Nota 2:</label>
+        <input type="number" id="nota2" name="nota2" step="0.01" required>
+        
+        <input type="submit" value="Enviar">
+    </form>
+
+    <table id="tabelaNotas">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Matrícula</th>
+                <th>Nota 1</th>
+                <th>Nota 2</th>
+                <th>Média</th>
+                <th>Situação</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('notaForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const nome = document.getElementById('nome').value;
+            const matricula = document.getElementById('matricula').value;
+            const nota1 = parseFloat(document.getElementById('nota1').value);
+            const nota2 = parseFloat(document.getElementById('nota2').value);
+            const media = (nota1 + nota2) / 2;
+            const situacao = media >= 5 ? 'Aprovado' : 'Reprovado';
+            
+            const tabela = document.getElementById('tabelaNotas').getElementsByTagName('tbody')[0];
+            const novaLinha = tabela.insertRow();
+            
+            const celulaNome = novaLinha.insertCell(0);
+            const celulaMatricula = novaLinha.insertCell(1);
+            const celulaNota1 = novaLinha.insertCell(2);
+            const celulaNota2 = novaLinha.insertCell(3);
+            const celulaMedia = novaLinha.insertCell(4);
+            const celulaSituacao = novaLinha.insertCell(5);
+            
+            celulaNome.textContent = nome;
+            celulaMatricula.textContent = matricula;
+            celulaNota1.textContent = nota1.toFixed(2);
+            celulaNota2.textContent = nota2.toFixed(2);
+            celulaMedia.textContent = media.toFixed(2);
+            celulaSituacao.textContent = situacao;
+            
+            document.getElementById('notaForm').reset();
+        });
+    </script>
+</body>
+</html>
